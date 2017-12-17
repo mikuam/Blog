@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ApplicationInsights
+namespace ApplicationInsights.DataGenerator
 {
     class Program
     {

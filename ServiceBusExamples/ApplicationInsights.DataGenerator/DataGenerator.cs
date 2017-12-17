@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ApplicationInsights
+namespace ApplicationInsights.DataGenerator
 {
     public class DataGenerator
     {

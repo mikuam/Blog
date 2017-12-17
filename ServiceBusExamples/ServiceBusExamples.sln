@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusExamples", "ServiceBusExamples\ServiceBusExamples.csproj", "{85C421AB-87A9-418C-B515-BF4BB0D17FA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationInsights", "ApplicationInsights\ApplicationInsights.csproj", "{3204B00D-378E-4484-B9D6-70A59A78C54C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationInsights.DataGenerator", "ApplicationInsights.DataGenerator\ApplicationInsights.DataGenerator.csproj", "{3204B00D-378E-4484-B9D6-70A59A78C54C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusExamples.MessagesSender.Web", "ServiceBusExamples.MessagesSender.Web\ServiceBusExamples.MessagesSender.Web.csproj", "{3E724019-35C7-45F9-8DF2-B79917C274F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{3204B00D-378E-4484-B9D6-70A59A78C54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3204B00D-378E-4484-B9D6-70A59A78C54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3204B00D-378E-4484-B9D6-70A59A78C54C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3373A55-770A-42BA-9879-7657C641E099}
 	EndGlobalSection
 EndGlobal
