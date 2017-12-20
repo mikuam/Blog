@@ -28,7 +28,10 @@ namespace ServiceBusExamples.MessagesSender.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "api/{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

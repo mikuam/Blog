@@ -6,10 +6,8 @@ using Microsoft.Azure.ServiceBus;
 
 namespace ServiceBusExamples.MessagesSender.Web.Controllers
 {
-    [Route("api/[controller]")]
     public class MessagesController : Controller
     {
-        // POST api/values
         [HttpPost]
         public async Task<IActionResult> Send([FromBody]SendMessageDto mesaage)
         {
