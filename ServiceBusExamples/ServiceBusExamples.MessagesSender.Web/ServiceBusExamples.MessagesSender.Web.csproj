@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Content Remove="appsettings.Development.json" />
-    <Content Remove="appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,11 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="appsettings.json" />
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
   <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
