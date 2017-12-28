@@ -2,6 +2,10 @@
 {
     public class SendMessageDto
     {
-        public string Value { get; set; }
+        public string StockId { get; set; }
+
+        public string Name { get; set; }
+
+        public float Price { get; set; }
     }
 }

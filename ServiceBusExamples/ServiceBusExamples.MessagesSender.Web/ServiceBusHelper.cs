@@ -8,13 +8,13 @@ namespace ServiceBusExamples.MessagesSender.Web
         public static QueueClient GetQueueClient(ReceiveMode receiveMode = ReceiveMode.ReceiveAndDelete)
         {
             const string queueName = "stockchangerequest";
-            var queueClient = new QueueClient(ConfigurationHelper.ServiceBusConnectionString(), queueName, receiveMode, GetRetryPolicy());
+            var queueClient = new QueueClient(ConfigurationHelper.GetServiceBusConnectionString(), queueName, receiveMode, GetRetryPolicy());
             return queueClient;
         }
 
         public static TopicClient GetTopicClient(string topicName = "stockupdated")
         {
-            var topicClient = new TopicClient(ConfigurationHelper.ServiceBusConnectionString(), topicName, GetRetryPolicy());
+            var topicClient = new TopicClient(ConfigurationHelper.GetServiceBusConnectionString(), topicName, GetRetryPolicy());
             return topicClient;
         }
 

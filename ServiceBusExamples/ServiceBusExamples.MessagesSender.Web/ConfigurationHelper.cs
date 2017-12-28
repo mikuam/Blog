@@ -5,28 +5,41 @@ namespace ServiceBusExamples.MessagesSender.Web
 {
     public static class ConfigurationHelper
     {
-        private static string connection;
+        private static IConfigurationRoot configuration;
 
-        public static string ServiceBusConnectionString()
+        public static string GetServiceBusConnectionString()
         {
-            if (string.IsNullOrWhiteSpace(connection))
-            {
-                connection = GetServiceBusConnectionString();
-            }
+            GetConfigurationIfNotExists();
 
-            return connection;
+            return configuration.GetValue<string>("ServiceBusConnectionString");
         }
 
-        private static string GetServiceBusConnectionString()
+        public static string GetCosmosDbPrimaryKey()
         {
+            GetConfigurationIfNotExists();
+
+            return configuration.GetValue<string>("CosmosDBPrimaryKey");
+        }
+
+        public static string GetCosmosDbEndpointUri()
+        {
+            GetConfigurationIfNotExists();
+
+            return configuration.GetValue<string>("CosmosDbEndpointUri");
+        }
+
+        private static void GetConfigurationIfNotExists()
+        {
+            if (configuration != null)
+            {
+                return;
+            }
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
 
-            var config = builder.Build();
-
-            var value = config.GetValue<string>("ServiceBusConnectionString");
-            return value;
-        }
+            configuration = builder.Build();
+        } 
     }
 }
