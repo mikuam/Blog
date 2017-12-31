@@ -1,31 +1,44 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using ServiceBusExamples.MessagesSender.Web.Dto;
 
 namespace ServiceBusExamples.MessagesSender.Web
 {
-    public static class DocumentDbService
+    public class DocumentDbService
     {
         private const string DatabaseName = "Documents";
 
         private const string CollectionName = "Messages";
 
-        public static async Task SaveDocumentAsync(DocumentDto document)
+        public async Task SaveDocumentAsync(DocumentDto document)
         {
             try
             {
                 var client = new DocumentClient(new Uri(ConfigurationHelper.GetCosmosDbEndpointUri()), ConfigurationHelper.GetCosmosDbPrimaryKey());
-                await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), document);
-            }
-            catch (DocumentClientException de)
-            {
-                Console.WriteLine("{0} error occurred: {1}, Message: {2}", de.StatusCode, de.Message, de.GetBaseException().Message);
+                await client.UpsertDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), document);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: {0}, Message: {1}", e.Message, e.GetBaseException().Message);
+            }
+        }
+
+        public IQueryable<DocumentDto> GetLatestDocuments()
+        {
+            try
+            {
+                var client = new DocumentClient(new Uri(ConfigurationHelper.GetCosmosDbEndpointUri()), ConfigurationHelper.GetCosmosDbPrimaryKey());
+                return client.CreateDocumentQuery<DocumentDto>(
+                    UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName),
+                    "SELECT * FROM Messages ORDER BY Messages.UpdatedAt desc",
+                    new FeedOptions { MaxItemCount = 10 });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: {0}, Message: {1}", e.Message, e.GetBaseException().Message);
+                return null;
             }
         }
     }
