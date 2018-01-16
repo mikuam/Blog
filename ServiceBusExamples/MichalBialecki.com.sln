@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusExamples", "ServiceBusExamples\ServiceBusExamples.csproj", "{85C421AB-87A9-418C-B515-BF4BB0D17FA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationInsights.DataGenerator", "ApplicationInsights.DataGenerator\ApplicationInsights.DataGenerator.csproj", "{3204B00D-378E-4484-B9D6-70A59A78C54C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBusExamples.MessagesSender.Web", "ServiceBusExamples.MessagesSender.Web\ServiceBusExamples.MessagesSender.Web.csproj", "{3E724019-35C7-45F9-8DF2-B79917C274F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBusExamples.MessagesSender.NetCore.Web", "ServiceBusExamples.MessagesSender.Web\ServiceBusExamples.MessagesSender.NetCore.Web.csproj", "{3E724019-35C7-45F9-8DF2-B79917C274F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bialecki.Data.Dto", "Bialecki.Data.Dto\Bialecki.Data.Dto.csproj", "{44A66692-511A-4C0C-A6A7-8F85D11278AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Odata.Web", "MichalBialecki.com.Odata.Web\MichalBialecki.com.Odata.Web.csproj", "{3A63F359-37C7-42E4-B230-757E57773B5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.Data.Dto", "MichalBialecki.com.Data.Dto\MichalBialecki.com.Data.Dto.csproj", "{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +31,14 @@ Global
 		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E724019-35C7-45F9-8DF2-B79917C274F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44A66692-511A-4C0C-A6A7-8F85D11278AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44A66692-511A-4C0C-A6A7-8F85D11278AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44A66692-511A-4C0C-A6A7-8F85D11278AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44A66692-511A-4C0C-A6A7-8F85D11278AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A63F359-37C7-42E4-B230-757E57773B5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A63F359-37C7-42E4-B230-757E57773B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A63F359-37C7-42E4-B230-757E57773B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A63F359-37C7-42E4-B230-757E57773B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
