@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Bialecki.Data.Dto
+namespace MichalBialecki.com.Data.Dto
 {
     public class Folder
     {
@@ -19,8 +18,8 @@ namespace Bialecki.Data.Dto
 
         public bool Hidden { get; set; }
 
-        public IReadOnlyCollection<Folder> Folders { get; set; }
+        public List<Folder> Folders { get; set; }
 
-        public IReadOnlyCollection<File> Files { get; set; }
+        public List<File> Files { get; set; }
     }
 }

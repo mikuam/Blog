@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bialecki.Data.Dto
+﻿namespace MichalBialecki.com.Data.Dto
 {
     public class File
     {
