@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace ServiceBusExamples.MessagesSender.Web
+namespace ServiceBusExamples.MessagesSender.NetCore.Web
 {
     public class Program
     {

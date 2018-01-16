@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Bialecki.Data.Dto;
+using MichalBialecki.com.Data.Dto;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ServiceBusExamples.MessagesSender.Web.Controllers
+namespace ServiceBusExamples.MessagesSender.NetCore.Web.Controllers
 {
     public class FoldersController : ODataController
     {

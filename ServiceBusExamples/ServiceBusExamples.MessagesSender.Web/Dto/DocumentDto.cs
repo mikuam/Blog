@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServiceBusExamples.MessagesSender.Web.Dto
+namespace ServiceBusExamples.MessagesSender.NetCore.Web.Dto
 {
     public class DocumentDto
     {

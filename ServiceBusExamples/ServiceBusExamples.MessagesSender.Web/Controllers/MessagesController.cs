@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 using Newtonsoft.Json;
-using ServiceBusExamples.MessagesSender.Web.Dto;
+using ServiceBusExamples.MessagesSender.NetCore.Web.Dto;
 
-namespace ServiceBusExamples.MessagesSender.Web.Controllers
+namespace ServiceBusExamples.MessagesSender.NetCore.Web.Controllers
 {
     public class MessagesController : Controller
     {

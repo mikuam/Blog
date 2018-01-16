@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 
-namespace ServiceBusExamples.MessagesSender.Web
+namespace ServiceBusExamples.MessagesSender.NetCore.Web
 {
     public static class ConfigurationHelper
     {

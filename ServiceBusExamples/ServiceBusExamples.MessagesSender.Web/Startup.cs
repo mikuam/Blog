@@ -1,5 +1,5 @@
 ﻿using System;
-using Bialecki.Data.Dto;
+using MichalBialecki.com.Data.Dto;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OData.Edm;
 
-namespace ServiceBusExamples.MessagesSender.Web
+namespace ServiceBusExamples.MessagesSender.NetCore.Web
 {
     public class Startup
     {

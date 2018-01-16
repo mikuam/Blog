@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bialecki.Data.Dto\Bialecki.Data.Dto.csproj" />
+    <ProjectReference Include="..\MichalBialecki.com.Data.Dto\MichalBialecki.com.Data.Dto.csproj" />
   </ItemGroup>
 
   <ItemGroup>

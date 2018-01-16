@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.Documents.Client;
-using ServiceBusExamples.MessagesSender.Web.Dto;
+using ServiceBusExamples.MessagesSender.NetCore.Web.Dto;
 
-namespace ServiceBusExamples.MessagesSender.Web
+namespace ServiceBusExamples.MessagesSender.NetCore.Web
 {
     public class DocumentDbService
     {

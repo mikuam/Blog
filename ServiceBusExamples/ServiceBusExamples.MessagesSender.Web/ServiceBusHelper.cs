@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Azure.ServiceBus;
 
-namespace ServiceBusExamples.MessagesSender.Web
+namespace ServiceBusExamples.MessagesSender.NetCore.Web
 {
     public class ServiceBusHelper
     {
