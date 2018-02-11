@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusExamples", "ServiceBusExamples\ServiceBusExamples.csproj", "{85C421AB-87A9-418C-B515-BF4BB0D17FA2}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Odata.Web", "MichalBialecki.com.Odata.Web\MichalBialecki.com.Odata.Web.csproj", "{3A63F359-37C7-42E4-B230-757E57773B5B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.Data.Dto", "MichalBialecki.com.Data.Dto\MichalBialecki.com.Data.Dto.csproj", "{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Egnyte.Examples", "MichalBialecki.com.Egnyte.Examples\MichalBialecki.com.Egnyte.Examples.csproj", "{8206601C-F9F6-4E27-8911-1696CCB02B81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA8AA267-2BE1-4139-B5FA-711C6D2FB0EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
