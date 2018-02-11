@@ -18,7 +18,7 @@ namespace MichalBialecki.com.Data.Dto
             return folders;
         }
 
-        private Folder GetTreeStructure(int numberOfFilesOrFolders, int structureDepth)
+        public Folder GetTreeStructure(int numberOfFilesOrFolders, int structureDepth)
         {
             var id = Guid.NewGuid().ToString();
 
