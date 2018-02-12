@@ -19,7 +19,7 @@ namespace MichalBialecki.com.Egnyte.Examples.Files
         {
             var client = new EgnyteClient(Token, Domain);
 
-            var fileStream = new MemoryStream(File.ReadAllBytes("C:/test/big-file.zip"));
+            var fileStream = new MemoryStream(File.ReadAllBytes("c:/test/big-file.zip"));
             var response = await ChunkUploadFile(client, "Shared/MikTests/Blog/big-file.zip", fileStream);
 
             Assert.Pass();
@@ -40,62 +40,62 @@ namespace MichalBialecki.com.Egnyte.Examples.Files
             Assert.Pass();
         }
 
-    private async Task<UploadedFileMetadata> ChunkUploadFile(
-        EgnyteClient client,
-        string serverFilePath,
-        MemoryStream fileStream)
-    {
-        // first chunk
-        var defaultChunkLength = 10485760;
-        var firstChunkLength = defaultChunkLength;
-        if (fileStream.Length < firstChunkLength)
+        private async Task<UploadedFileMetadata> ChunkUploadFile(
+            EgnyteClient client,
+            string serverFilePath,
+            MemoryStream fileStream)
         {
-            firstChunkLength = (int)fileStream.Length;
+            // first chunk
+            var defaultChunkLength = 10485760;
+            var firstChunkLength = defaultChunkLength;
+            if (fileStream.Length < firstChunkLength)
+            {
+                firstChunkLength = (int)fileStream.Length;
+            }
+
+            var bytesRead = firstChunkLength;
+            var buffer = new byte[firstChunkLength];
+            fileStream.Read(buffer, 0, firstChunkLength);
+
+            var response = await client.Files.ChunkedUploadFirstChunk(serverFilePath, new MemoryStream(buffer))
+                .ConfigureAwait(false);
+            int number = 2;
+
+            while (bytesRead < fileStream.Length)
+            {
+                var nextChunkLength = defaultChunkLength;
+                bool isLastChunk = false;
+                if (bytesRead + nextChunkLength >= fileStream.Length)
+                {
+                    nextChunkLength = (int)fileStream.Length - bytesRead;
+                    isLastChunk = true;
+                }
+
+                buffer = new byte[nextChunkLength];
+                fileStream.Read(buffer, 0, nextChunkLength);
+
+                if (!isLastChunk)
+                {
+                    await client.Files.ChunkedUploadNextChunk(
+                        serverFilePath,
+                        number,
+                        response.UploadId,
+                        new MemoryStream(buffer)).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await client.Files.ChunkedUploadLastChunk(
+                        serverFilePath,
+                        number,
+                        response.UploadId,
+                        new MemoryStream(buffer)).ConfigureAwait(false);
+                }
+                number++;
+                bytesRead += nextChunkLength;
+            }
+
+            throw new Exception("Something went wrong - unable to enumerate to next chunk.");
         }
-
-        var bytesRead = firstChunkLength;
-        var buffer = new byte[firstChunkLength];
-        fileStream.Read(buffer, 0, firstChunkLength);
-
-        var response = await client.Files.ChunkedUploadFirstChunk(serverFilePath, new MemoryStream(buffer))
-            .ConfigureAwait(false);
-        int number = 2;
-
-        while (bytesRead < fileStream.Length)
-        {
-            var nextChunkLength = defaultChunkLength;
-            bool isLastChunk = false;
-            if (bytesRead + nextChunkLength >= fileStream.Length)
-            {
-                nextChunkLength = (int)fileStream.Length - bytesRead;
-                isLastChunk = true;
-            }
-
-            buffer = new byte[nextChunkLength];
-            fileStream.Read(buffer, 0, nextChunkLength);
-
-            if (!isLastChunk)
-            {
-                await client.Files.ChunkedUploadNextChunk(
-                    serverFilePath,
-                    number,
-                    response.UploadId,
-                    new MemoryStream(buffer)).ConfigureAwait(false);
-            }
-            else
-            {
-                return await client.Files.ChunkedUploadLastChunk(
-                    serverFilePath,
-                    number,
-                    response.UploadId,
-                    new MemoryStream(buffer)).ConfigureAwait(false);
-            }
-            number++;
-            bytesRead += nextChunkLength;
-        }
-
-        throw new Exception("Something went wrong - unable to enumerate to next chunk.");
-    }
 
         /// <summary>
         /// Copies the contents of input to output. Doesn't close either stream.
