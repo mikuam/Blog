@@ -6,8 +6,8 @@ namespace MichalBialecki.com.Orleans.StoresGrainInterfaces
     /// <summary>
     /// Grain interface IGrain1
     /// </summary>
-    public interface IGrain1 : IGrainWithGuidKey
+    public interface IStore : IGrainWithGuidKey
     {
-
+        Task<float> GetBalanceForToday();
     }
 }
