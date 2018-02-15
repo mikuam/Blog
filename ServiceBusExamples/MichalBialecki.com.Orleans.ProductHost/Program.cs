@@ -31,8 +31,8 @@ namespace MichalBialecki.com.Orleans.StoresHost
             //
             // This is the place for your test code.
             //
-            var friend = client.GetGrain<StoresGrainInterfaces.IStore>(0);
-            Console.WriteLine("\n\n{0}\n\n", friend.GetBalanceForToday().Result);
+            var productRating = client.GetGrain<ProductGrainInterfaces.IProductRatingGrain>(0);
+            Console.WriteLine("\n\n{0}\n\n", productRating.GetRating().Result);
 
             Console.WriteLine("\nPress Enter to terminate...");
             Console.ReadLine();

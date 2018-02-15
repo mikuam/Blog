@@ -7,8 +7,8 @@
     <ProjectGuid>{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MichalBialecki.com.Orleans.StoresGrains</RootNamespace>
-    <AssemblyName>MichalBialecki.com.Orleans.StoresGrains</AssemblyName>
+    <RootNamespace>MichalBialecki.com.Orleans.ProductGrains</RootNamespace>
+    <AssemblyName>MichalBialecki.com.Orleans.ProductGrains</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -42,16 +42,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Store.cs" />
+    <Compile Include="ProductRatingGrain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MichalBialecki.com.Orleans.StoresGrainInterfaces\MichalBialecki.com.Orleans.StoresGrainInterfaces.csproj">
+    <ProjectReference Include="..\MichalBialecki.com.Orleans.ProductGrainInterfaces\MichalBialecki.com.Orleans.ProductGrainInterfaces.csproj">
       <Project>{2fe8218f-bf6f-47de-981c-671bf82cc43e}</Project>
-      <Name>MichalBialecki.com.Orleans.StoresGrainInterfaces</Name>
+      <Name>MichalBialecki.com.Orleans.ProductGrainInterfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

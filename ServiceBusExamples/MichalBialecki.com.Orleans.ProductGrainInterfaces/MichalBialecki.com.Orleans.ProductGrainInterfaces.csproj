@@ -7,8 +7,8 @@
     <ProjectGuid>{2FE8218F-BF6F-47DE-981C-671BF82CC43E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MichalBialecki.com.Orleans.StoresGrainInterfaces</RootNamespace>
-    <AssemblyName>MichalBialecki.com.Orleans.StoresGrainInterfaces</AssemblyName>
+    <RootNamespace>MichalBialecki.com.Orleans.ProductGrainInterfaces</RootNamespace>
+    <AssemblyName>MichalBialecki.com.Orleans.ProductGrainInterfaces</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -42,7 +42,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IStore.cs" />
+    <Compile Include="IProductRatingGrain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

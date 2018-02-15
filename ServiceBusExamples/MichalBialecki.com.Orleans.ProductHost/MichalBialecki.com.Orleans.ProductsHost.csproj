@@ -7,8 +7,8 @@
     <ProjectGuid>{D9963F5B-294E-4724-8BB7-1870E8966102}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MichalBialecki.com.Orleans.StoresHost</RootNamespace>
-    <AssemblyName>MichalBialecki.com.Orleans.StoresHost</AssemblyName>
+    <RootNamespace>MichalBialecki.com.Orleans.ProductsHost</RootNamespace>
+    <AssemblyName>MichalBialecki.com.Orleans.ProductsHost</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -101,9 +101,13 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MichalBialecki.com.Orleans.StoresGrainInterfaces\MichalBialecki.com.Orleans.StoresGrainInterfaces.csproj">
+    <ProjectReference Include="..\MichalBialecki.com.Orleans.ProductGrainInterfaces\MichalBialecki.com.Orleans.ProductGrainInterfaces.csproj">
       <Project>{2fe8218f-bf6f-47de-981c-671bf82cc43e}</Project>
-      <Name>MichalBialecki.com.Orleans.StoresGrainInterfaces</Name>
+      <Name>MichalBialecki.com.Orleans.ProductGrainInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MichalBialecki.com.Orleans.ProductGrains\MichalBialecki.com.Orleans.ProductGrains.csproj">
+      <Project>{ccb0a7a7-03ad-4176-b6eb-9e22409c966a}</Project>
+      <Name>MichalBialecki.com.Orleans.ProductGrains</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

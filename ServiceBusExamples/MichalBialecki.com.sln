@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.Data.Dto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Egnyte.Examples", "MichalBialecki.com.Egnyte.Examples\MichalBialecki.com.Egnyte.Examples.csproj", "{8206601C-F9F6-4E27-8911-1696CCB02B81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.StoresHost", "MichalBialecki.com.Orleans.StoresHost\MichalBialecki.com.Orleans.StoresHost.csproj", "{D9963F5B-294E-4724-8BB7-1870E8966102}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.ProductGrainInterfaces", "MichalBialecki.com.Orleans.ProductGrainInterfaces\MichalBialecki.com.Orleans.ProductGrainInterfaces.csproj", "{2FE8218F-BF6F-47DE-981C-671BF82CC43E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.StoresGrainInterfaces", "MichalBialecki.com.Orleans.StoresGrainInterfaces\MichalBialecki.com.Orleans.StoresGrainInterfaces.csproj", "{2FE8218F-BF6F-47DE-981C-671BF82CC43E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.ProductGrains", "MichalBialecki.com.Orleans.ProductGrains\MichalBialecki.com.Orleans.ProductGrains.csproj", "{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.StoresGrains", "MichalBialecki.com.Orleans.StoresGrains\MichalBialecki.com.Orleans.StoresGrains.csproj", "{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.ProductsHost", "MichalBialecki.com.Orleans.ProductHost\MichalBialecki.com.Orleans.ProductsHost.csproj", "{D9963F5B-294E-4724-8BB7-1870E8966102}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,6 @@ Global
 		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8206601C-F9F6-4E27-8911-1696CCB02B81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9963F5B-294E-4724-8BB7-1870E8966102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9963F5B-294E-4724-8BB7-1870E8966102}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9963F5B-294E-4724-8BB7-1870E8966102}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9963F5B-294E-4724-8BB7-1870E8966102}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FE8218F-BF6F-47DE-981C-671BF82CC43E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FE8218F-BF6F-47DE-981C-671BF82CC43E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FE8218F-BF6F-47DE-981C-671BF82CC43E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +59,10 @@ Global
 		{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9963F5B-294E-4724-8BB7-1870E8966102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9963F5B-294E-4724-8BB7-1870E8966102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9963F5B-294E-4724-8BB7-1870E8966102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9963F5B-294E-4724-8BB7-1870E8966102}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
