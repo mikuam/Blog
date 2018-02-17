@@ -10,12 +10,12 @@ namespace MichalBialecki.com.Orleans.ProductGrains
     {
         public async Task<float> GetRating()
         {
-            return Task.FromResult(4.5);
+            return (float)4.5;
         }
 
-        public async Task UpdateRating()
+        public async Task UpdateRating(float rating)
         {
-            TaskDone.Done;
+            return;
         }
     }
 }
