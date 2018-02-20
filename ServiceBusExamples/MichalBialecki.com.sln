@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusExamples", "ServiceBusExamples\ServiceBusExamples.csproj", "{85C421AB-87A9-418C-B515-BF4BB0D17FA2}"
 EndProject
@@ -20,6 +20,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.ProductGrains", "MichalBialecki.com.Orleans.ProductGrains\MichalBialecki.com.Orleans.ProductGrains.csproj", "{CCB0A7A7-03AD-4176-B6EB-9E22409C966A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Orleans.ProductsHost", "MichalBialecki.com.Orleans.ProductHost\MichalBialecki.com.Orleans.ProductsHost.csproj", "{D9963F5B-294E-4724-8BB7-1870E8966102}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.ServiceBusCore", "MichalBialecki.com.ServiceBusCore\MichalBialecki.com.ServiceBusCore.csproj", "{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.OrleansCore.ProductGrainInterfaces", "MichalBialecki.com.OrleansCore.ProductGrainInterfaces\MichalBialecki.com.OrleansCore.ProductGrainInterfaces.csproj", "{080FB842-654D-4636-A708-EDE4C7B83953}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.OrleansCore.ProductGrains", "MichalBialecki.com.OrleansCore.ProductGrains\MichalBialecki.com.OrleansCore.ProductGrains.csproj", "{226B0DFB-A115-4958-AF8E-FE14ED76604E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.OrleansCore.ProductsHost", "MichalBialecki.com.OrleansCore.ProductsHost\MichalBialecki.com.OrleansCore.ProductsHost.csproj", "{69D30E9C-2DE0-4DD3-9425-AB1647862866}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +71,22 @@ Global
 		{D9963F5B-294E-4724-8BB7-1870E8966102}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9963F5B-294E-4724-8BB7-1870E8966102}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9963F5B-294E-4724-8BB7-1870E8966102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080FB842-654D-4636-A708-EDE4C7B83953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080FB842-654D-4636-A708-EDE4C7B83953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080FB842-654D-4636-A708-EDE4C7B83953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080FB842-654D-4636-A708-EDE4C7B83953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
