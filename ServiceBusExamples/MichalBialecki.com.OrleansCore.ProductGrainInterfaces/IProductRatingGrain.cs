@@ -7,6 +7,6 @@ namespace MichalBialecki.com.OrleansCore.ProductGrainInterfaces
     {
         Task<float> GetRating();
 
-        Task UpdateRating(float rating);
+        Task UpdateRating(int ratingSum, int ratingCount, int sellerId);
     }
 }

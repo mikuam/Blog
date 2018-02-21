@@ -1,8 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MichalBialecki.com.OrleansCore.ProductGrainInterfaces;
+using Microsoft.Azure.ServiceBus;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Orleans;
 using Orleans.Hosting;
 using Orleans.Runtime.Configuration;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MichalBialecki.com.OrleansCore.ProductsHost
@@ -23,6 +27,7 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
                 Console.ReadLine();
 
                 await host.StopAsync();
+                RunListener();
 
                 return 0;
             }
@@ -47,6 +52,37 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
             var host = builder.Build();
             await host.StartAsync();
             return host;
+        }
+
+        private static void RunListener()
+        {   
+            var client = new ServiceBusCore.ServiceBusClient();
+            client.Init(" ", string.Empty, "productRatingUpdates", ReceiveMode.PeekLock);
+            var subscriptionClient = client.GetSubscriptionClient("consumerOrleansCore");
+
+            while (true)
+            {
+                try
+                {
+                    subscriptionClient.RegisterMessageHandler(
+                        async (message, token) =>
+                        {
+                            var messageJson = Encoding.UTF8.GetString(message.Body);
+                            var updateMessage = JsonConvert.DeserializeObject<ProductRatingUpdateMessage>(messageJson);
+
+                            var productGrain = GrainClient.GrainFactory.GetGrain<IProductRatingGrain>(updateMessage.ProductId);
+                            productGrain.
+
+                            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+                        },
+                        new MessageHandlerOptions(async args => Console.WriteLine(args.Exception))
+                            { MaxConcurrentCalls = 1, AutoComplete = false });
+                }
+                catch (Exception)
+                {
+                    
+                }
+            }
         }
     }
 }

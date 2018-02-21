@@ -37,6 +37,18 @@ namespace MichalBialecki.com.ServiceBusCore
             return topicClient;
         }
 
+        public SubscriptionClient GetSubscriptionClient(string subscriptionName)
+        {
+            var subscriptionClient = new SubscriptionClient(
+                _serviceBusConnectionString,
+                _topicName,
+                subscriptionName,
+                _receiveMode,
+                GetRetryPolicy());
+
+            return subscriptionClient;
+        }
+
         private static RetryExponential GetRetryPolicy()
         {
             return new RetryExponential(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(30), 10);
