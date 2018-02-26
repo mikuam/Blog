@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OData.Edm;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ServiceBusExamples.MessagesSender.NetCore.Web
 {
@@ -22,6 +23,11 @@ namespace ServiceBusExamples.MessagesSender.NetCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
             services.AddMvc();
             services.AddOData();
         }
@@ -33,7 +39,7 @@ namespace ServiceBusExamples.MessagesSender.NetCore.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             IEdmModel model = GetEdmModel(app.ApplicationServices);
 
             app.UseMvc(routes =>
@@ -42,6 +48,13 @@ namespace ServiceBusExamples.MessagesSender.NetCore.Web
                 routes.EnableDependencyInjection();
                 routes.MapRoute("default", "api/{controller=Folders}/{action=Get}");
                 routes.MapODataServiceRoute("odata", "odata", model);
+            });
+
+            app.UseSwagger();
+            
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
 

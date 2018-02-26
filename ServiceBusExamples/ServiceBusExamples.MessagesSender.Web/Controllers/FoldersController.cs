@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceBusExamples.MessagesSender.NetCore.Web.Controllers
 {
+    [Route("Folders")]
     public class FoldersController : ODataController
     {
         [Produces("application/json")]

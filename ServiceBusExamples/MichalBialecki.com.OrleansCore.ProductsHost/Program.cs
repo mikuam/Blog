@@ -13,6 +13,8 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
 {
     class Program
     {
+        private const string ServiceBusConnectionString = "Endpoint=sb://bialecki.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=39cH/mE4siF49REMd9xtjVlUwoc0yPJNz9J8isRc9vY=";
+
         public static int Main(string[] args)
         {
             return RunMainAsync().Result;
@@ -23,11 +25,12 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
             try
             {
                 var host = await StartSilo();
+
+                RunListener();
                 Console.WriteLine("Press Enter to terminate...");
                 Console.ReadLine();
 
                 await host.StopAsync();
-                RunListener();
 
                 return 0;
             }
@@ -57,31 +60,31 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
         private static void RunListener()
         {   
             var client = new ServiceBusCore.ServiceBusClient();
-            client.Init(" ", string.Empty, "productRatingUpdates", ReceiveMode.PeekLock);
+            client.Init(ServiceBusConnectionString, string.Empty, "productRatingUpdates", ReceiveMode.PeekLock);
             var subscriptionClient = client.GetSubscriptionClient("consumerOrleansCore");
 
-            while (true)
+            try
             {
-                try
-                {
-                    subscriptionClient.RegisterMessageHandler(
-                        async (message, token) =>
-                        {
-                            var messageJson = Encoding.UTF8.GetString(message.Body);
-                            var updateMessage = JsonConvert.DeserializeObject<ProductRatingUpdateMessage>(messageJson);
+                subscriptionClient.RegisterMessageHandler(
+                    async (message, token) =>
+                    {
+                        var messageJson = Encoding.UTF8.GetString(message.Body);
+                        var updateMessage = JsonConvert.DeserializeObject<ProductRatingUpdateMessage>(messageJson);
 
-                            var productGrain = GrainClient.GrainFactory.GetGrain<IProductRatingGrain>(updateMessage.ProductId);
-                            productGrain.
+                        var productGrain = GrainClient.GrainFactory.GetGrain<IProductRatingGrain>(updateMessage.ProductId);
+                        await productGrain.UpdateRatingAsync(
+                            updateMessage.RatingSum,
+                            updateMessage.RatingCount,
+                            updateMessage.SellerId);
 
-                            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
-                        },
-                        new MessageHandlerOptions(async args => Console.WriteLine(args.Exception))
-                            { MaxConcurrentCalls = 1, AutoComplete = false });
-                }
-                catch (Exception)
-                {
-                    
-                }
+                        await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+                    },
+                    new MessageHandlerOptions(async args => Console.WriteLine(args.Exception))
+                        { MaxConcurrentCalls = 1, AutoComplete = false });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
             }
         }
     }

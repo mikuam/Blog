@@ -5,8 +5,8 @@ namespace MichalBialecki.com.OrleansCore.ProductGrainInterfaces
 {
     public interface IProductRatingGrain : IGrainWithIntegerKey
     {
-        Task<float> GetRating();
+        Task<float> GetRatingAsync();
 
-        Task UpdateRating(int ratingSum, int ratingCount, int sellerId);
+        Task UpdateRatingAsync(int ratingSum, int ratingCount, int sellerId);
     }
 }

@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="1.7.1" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MichalBialecki.com.Data.Dto\MichalBialecki.com.Data.Dto.csproj" />
+    <ProjectReference Include="..\MichalBialecki.com.ServiceBusCore\MichalBialecki.com.ServiceBusCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

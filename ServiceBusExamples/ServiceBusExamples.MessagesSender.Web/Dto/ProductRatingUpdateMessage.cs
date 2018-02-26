@@ -1,4 +1,4 @@
-﻿namespace MichalBialecki.com.OrleansCore.ProductsHost
+﻿namespace ServiceBusExamples.MessagesSender.NetCore.Web.Dto
 {
     public class ProductRatingUpdateMessage
     {

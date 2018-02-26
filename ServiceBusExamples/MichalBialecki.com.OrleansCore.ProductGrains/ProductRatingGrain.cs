@@ -14,12 +14,12 @@ namespace MichalBialecki.com.OrleansCore.ProductGrains
 
         private int SellerId { get; set; }
 
-        public async Task<float> GetRating()
+        public async Task<float> GetRatingAsync()
         {
             return (float)4.5;
         }
 
-        public async Task UpdateRating(int ratingSum, int ratingCount, int sellerId)
+        public async Task UpdateRatingAsync(int ratingSum, int ratingCount, int sellerId)
         {
             return;
         }
