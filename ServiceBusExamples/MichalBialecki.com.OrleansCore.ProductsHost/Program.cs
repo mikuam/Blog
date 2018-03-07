@@ -8,6 +8,7 @@ using Orleans.Runtime.Configuration;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Orleans.Hosting.Development;
 
 namespace MichalBialecki.com.OrleansCore.ProductsHost
 {
@@ -49,6 +50,7 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
 
             var builder = new SiloHostBuilder()
                 .UseConfiguration(config)
+                .ConfigureApplicationParts(parts => parts.AddFromAppDomain().AddFromApplicationBaseDirectory())
                 //.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(HelloGrain).Assembly).WithReferences())
                 .ConfigureLogging(logging => logging.AddConsole());
 
@@ -61,7 +63,7 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
         {   
             var client = new ServiceBusCore.ServiceBusClient();
             client.Init(ServiceBusConnectionString, string.Empty, "productRatingUpdates", ReceiveMode.PeekLock);
-            var subscriptionClient = client.GetSubscriptionClient("consumerOrleansCore");
+            var subscriptionClient = client.GetSubscriptionClient("sampleSubscription");
 
             try
             {
