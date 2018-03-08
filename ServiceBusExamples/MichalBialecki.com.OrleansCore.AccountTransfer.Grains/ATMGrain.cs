@@ -4,7 +4,6 @@ using MichalBialecki.com.OrleansCore.AccountTransfer.Interfaces;
 using Orleans;
 using Orleans.Concurrency;
 
-
 namespace MichalBialecki.com.OrleansCore.AccountTransfer.Grains
 {
     [StatelessWorker]
