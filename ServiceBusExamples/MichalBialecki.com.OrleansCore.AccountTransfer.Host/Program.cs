@@ -1,21 +1,16 @@
-﻿using MichalBialecki.com.OrleansCore.ProductGrainInterfaces;
-using Microsoft.Azure.ServiceBus;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Orleans;
 using Orleans.Hosting;
-using Orleans.Runtime.Configuration;
-using System;
-using System.Text;
-using System.Threading.Tasks;
 using Orleans.Hosting.Development;
+using Orleans.Configuration;
+using System.Net;
 
-namespace MichalBialecki.com.OrleansCore.ProductsHost
+namespace MichalBialecki.com.OrleansCore.AccountTransfer.Host
 {
-    class Program
+    public class Program
     {
-        private const string ServiceBusConnectionString = "Endpoint=sb://bialecki.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=39cH/mE4siF49REMd9xtjVlUwoc0yPJNz9J8isRc9vY=";
-
         public static int Main(string[] args)
         {
             return RunMainAsync().Result;
@@ -26,8 +21,6 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
             try
             {
                 var host = await StartSilo();
-
-                RunListener();
                 Console.WriteLine("Press Enter to terminate...");
                 Console.ReadLine();
 
@@ -44,23 +37,30 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
 
         private static async Task<ISiloHost> StartSilo()
         {
-            // define the cluster configuration
-            var config = ClusterConfiguration.LocalhostPrimarySilo();
-            config.AddMemoryStorageProvider();
+            var siloPort = 11111;
+            int gatewayPort = 30000;
+            var siloAddress = IPAddress.Loopback;
 
             var builder = new SiloHostBuilder()
-                .UseConfiguration(config)
+                .Configure(options => options.ClusterId = "accounting")
+                .UseDevelopmentClustering(options => options.PrimarySiloEndpoint = new IPEndPoint(siloAddress, siloPort))
+                .ConfigureEndpoints(siloAddress, siloPort, gatewayPort)
                 .ConfigureApplicationParts(parts => parts.AddFromAppDomain().AddFromApplicationBaseDirectory())
-                //.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(HelloGrain).Assembly).WithReferences())
-                .ConfigureLogging(logging => logging.AddConsole());
+                .ConfigureLogging(logging => logging.AddConsole())
+                .AddMemoryGrainStorageAsDefault()
+                .UseInClusterTransactionManager()
+                .UseInMemoryTransactionLog()
+                .UseTransactionalState();
 
             var host = builder.Build();
             await host.StartAsync();
             return host;
         }
+    }
 
-        private static void RunListener()
-        {   
+/*
+        private const string ServiceBusConnectionString = "Endpoint=sb://bialecki.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=39cH/mE4siF49REMd9xtjVlUwoc0yPJNz9J8isRc9vY=";
+
             var client = new ServiceBusCore.ServiceBusClient();
             client.Init(ServiceBusConnectionString, string.Empty, "productRatingUpdates", ReceiveMode.PeekLock);
             var subscriptionClient = client.GetSubscriptionClient("sampleSubscription");
@@ -90,4 +90,5 @@ namespace MichalBialecki.com.OrleansCore.ProductsHost
             }
         }
     }
+    */
 }

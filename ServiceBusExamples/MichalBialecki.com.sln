@@ -17,13 +17,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.Egnyte.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.ServiceBusCore", "MichalBialecki.com.ServiceBusCore\MichalBialecki.com.ServiceBusCore.csproj", "{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.OrleansCore.ProductGrainInterfaces", "MichalBialecki.com.OrleansCore.ProductGrainInterfaces\MichalBialecki.com.OrleansCore.ProductGrainInterfaces.csproj", "{080FB842-654D-4636-A708-EDE4C7B83953}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.OrleansCore.ProductGrains", "MichalBialecki.com.OrleansCore.ProductGrains\MichalBialecki.com.OrleansCore.ProductGrains.csproj", "{226B0DFB-A115-4958-AF8E-FE14ED76604E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.OrleansCore.ProductsHost", "MichalBialecki.com.OrleansCore.ProductsHost\MichalBialecki.com.OrleansCore.ProductsHost.csproj", "{69D30E9C-2DE0-4DD3-9425-AB1647862866}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.ServiceBusCore.Examples", "MichalBialecki.com.ServiceBusCore.Examples\MichalBialecki.com.ServiceBusCore.Examples.csproj", "{8A9236CA-0C77-4ECA-949F-E19CEA99A1F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.OrleansCore.AccountTransfer.Grains", "MichalBialecki.com.OrleansCore.AccountTransfer.Grains\MichalBialecki.com.OrleansCore.AccountTransfer.Grains.csproj", "{54E05B96-63A2-451B-8C72-A5E0F7A2049E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.OrleansCore.AccountTransfer.Interfaces", "MichalBialecki.com.OrleansCore.AccountTransfer.Interfaces\MichalBialecki.com.OrleansCore.AccountTransfer.Interfaces.csproj", "{6E2943EB-E331-4D22-AADC-4B87BFABB2D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MichalBialecki.com.OrleansCore.AccountTransfer.Host", "MichalBialecki.com.OrleansCore.AccountTransfer.Host\MichalBialecki.com.OrleansCore.AccountTransfer.Host.csproj", "{8D8FBA0D-5472-4D46-8BD3-B7EDF06C82D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichalBialecki.com.OrleansCore.AccountTransfer.Client", "MichalBialecki.com.OrleansCore.AccountTransfer.Client\MichalBialecki.com.OrleansCore.AccountTransfer.Client.csproj", "{E34CDD8E-423F-49A2-A3CF-7C877D44E821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,22 +61,26 @@ Global
 		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42211CAC-25A7-4CEA-91DB-B0364A9BEC69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{080FB842-654D-4636-A708-EDE4C7B83953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{080FB842-654D-4636-A708-EDE4C7B83953}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{080FB842-654D-4636-A708-EDE4C7B83953}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{080FB842-654D-4636-A708-EDE4C7B83953}.Release|Any CPU.Build.0 = Release|Any CPU
-		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{226B0DFB-A115-4958-AF8E-FE14ED76604E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69D30E9C-2DE0-4DD3-9425-AB1647862866}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A9236CA-0C77-4ECA-949F-E19CEA99A1F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A9236CA-0C77-4ECA-949F-E19CEA99A1F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A9236CA-0C77-4ECA-949F-E19CEA99A1F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A9236CA-0C77-4ECA-949F-E19CEA99A1F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E05B96-63A2-451B-8C72-A5E0F7A2049E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E05B96-63A2-451B-8C72-A5E0F7A2049E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E05B96-63A2-451B-8C72-A5E0F7A2049E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E05B96-63A2-451B-8C72-A5E0F7A2049E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E2943EB-E331-4D22-AADC-4B87BFABB2D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E2943EB-E331-4D22-AADC-4B87BFABB2D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E2943EB-E331-4D22-AADC-4B87BFABB2D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E2943EB-E331-4D22-AADC-4B87BFABB2D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D8FBA0D-5472-4D46-8BD3-B7EDF06C82D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D8FBA0D-5472-4D46-8BD3-B7EDF06C82D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D8FBA0D-5472-4D46-8BD3-B7EDF06C82D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D8FBA0D-5472-4D46-8BD3-B7EDF06C82D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E34CDD8E-423F-49A2-A3CF-7C877D44E821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E34CDD8E-423F-49A2-A3CF-7C877D44E821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E34CDD8E-423F-49A2-A3CF-7C877D44E821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E34CDD8E-423F-49A2-A3CF-7C877D44E821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
