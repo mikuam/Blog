@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MichalBialecki.com.OrleansCore.AccountTransfer.Interfaces;
 using Orleans;
 using Orleans.Concurrency;

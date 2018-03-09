@@ -57,38 +57,4 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Host
             return host;
         }
     }
-
-/*
-        private const string ServiceBusConnectionString = "Endpoint=sb://bialecki.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=39cH/mE4siF49REMd9xtjVlUwoc0yPJNz9J8isRc9vY=";
-
-            var client = new ServiceBusCore.ServiceBusClient();
-            client.Init(ServiceBusConnectionString, string.Empty, "productRatingUpdates", ReceiveMode.PeekLock);
-            var subscriptionClient = client.GetSubscriptionClient("sampleSubscription");
-
-            try
-            {
-                subscriptionClient.RegisterMessageHandler(
-                    async (message, token) =>
-                    {
-                        var messageJson = Encoding.UTF8.GetString(message.Body);
-                        var updateMessage = JsonConvert.DeserializeObject<ProductRatingUpdateMessage>(messageJson);
-
-                        var productGrain = GrainClient.GrainFactory.GetGrain<IProductRatingGrain>(updateMessage.ProductId);
-                        await productGrain.UpdateRatingAsync(
-                            updateMessage.RatingSum,
-                            updateMessage.RatingCount,
-                            updateMessage.SellerId);
-
-                        await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
-                    },
-                    new MessageHandlerOptions(async args => Console.WriteLine(args.Exception))
-                        { MaxConcurrentCalls = 1, AutoComplete = false });
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-            }
-        }
-    }
-    */
 }
