@@ -20,25 +20,31 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Grains
 
     public class AccountGrain : Grain, IAccountGrain
     {
-        private const string ServiceBusConnectionString = "Endpoint=sb://bialecki.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=39cH/mE4siF49REMd9xtjVlUwoc0yPJNz9J8isRc9vY=";
+        private readonly IServiceBusClient serviceBusClient;
 
         private readonly ITransactionalState<Balance> balance;
 
-        private TopicClient topicClient;
-
         public AccountGrain(
+            IServiceBusClient serviceBusClient,
             [TransactionalState("balance")] ITransactionalState<Balance> balance)
         {
+            this.serviceBusClient = serviceBusClient;
             this.balance = balance ?? throw new ArgumentNullException(nameof(balance));
-            topicClient = new TopicClient(ServiceBusConnectionString, "balanceUpdates");
         }
 
         async Task IAccountGrain.Deposit(decimal amount)
         {
-            this.balance.State.Value += amount;
-            this.balance.Save();
+            try
+            {
+                this.balance.State.Value += amount;
+                this.balance.Save();
 
-            await NotifyBalanceUpdate();
+                await NotifyBalanceUpdate();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         async Task IAccountGrain.Withdraw(decimal amount)
@@ -63,7 +69,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Grains
             };
 
             var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(balanceUpdate)));
-            await topicClient.SendAsync(message);
+            await serviceBusClient.SendMessageAsync(message);
         }
     }
 }

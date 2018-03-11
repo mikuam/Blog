@@ -89,16 +89,20 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
                 subscriptionClient.RegisterMessageHandler(
                     async (message, token) =>
                     {
-                        var messageJson = Encoding.UTF8.GetString(message.Body);
-                        var updateMessage = JsonConvert.DeserializeObject<AccountTransferMessage>(messageJson);
+                        try
+                        {
+                            var messageJson = Encoding.UTF8.GetString(message.Body);
+                            var updateMessage = JsonConvert.DeserializeObject<AccountTransferMessage>(messageJson);
+                            
+                            await client.GetGrain<IAccountGrain>(updateMessage.From).Withdraw(updateMessage.Amount);
+                            await client.GetGrain<IAccountGrain>(updateMessage.To).Deposit(updateMessage.Amount);
 
-                        //var atm = client.GetGrain<IATMGrain>(0);
-                        //await atm.Transfer(updateMessage.From, updateMessage.To, updateMessage.Amount);
-                        await Task.WhenAll(
-                            client.GetGrain<IAccountGrain>(updateMessage.From).Withdraw(updateMessage.Amount),
-                            client.GetGrain<IAccountGrain>(updateMessage.To).Deposit(updateMessage.Amount));
-
-                await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+                            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     },
                     new MessageHandlerOptions(async args => Console.WriteLine(args.Exception + ", stack trace: " + args.Exception.StackTrace))
                     { MaxConcurrentCalls = 10, AutoComplete = false });

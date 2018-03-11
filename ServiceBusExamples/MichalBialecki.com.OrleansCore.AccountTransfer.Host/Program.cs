@@ -6,6 +6,9 @@ using Orleans.Hosting;
 using Orleans.Hosting.Development;
 using Orleans.Configuration;
 using System.Net;
+using Microsoft.Extensions.DependencyInjection;
+using MichalBialecki.com.OrleansCore.AccountTransfer.Grains;
+using MichalBialecki.com.OrleansCore.AccountTransfer.Interfaces;
 
 namespace MichalBialecki.com.OrleansCore.AccountTransfer.Host
 {
@@ -46,6 +49,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Host
                 .UseDevelopmentClustering(options => options.PrimarySiloEndpoint = new IPEndPoint(siloAddress, siloPort))
                 .ConfigureEndpoints(siloAddress, siloPort, gatewayPort)
                 .ConfigureApplicationParts(parts => parts.AddFromAppDomain().AddFromApplicationBaseDirectory())
+                .ConfigureServices(context => ConfigureDI(context))
                 .ConfigureLogging(logging => logging.AddConsole())
                 .AddMemoryGrainStorageAsDefault()
                 .UseInClusterTransactionManager()
@@ -55,6 +59,13 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Host
             var host = builder.Build();
             await host.StartAsync();
             return host;
+        }
+
+        private static IServiceProvider ConfigureDI(IServiceCollection services)
+        {
+            services.AddSingleton<IServiceBusClient, ServiceBusClient>();
+
+            return services.BuildServiceProvider();
         }
     }
 }
