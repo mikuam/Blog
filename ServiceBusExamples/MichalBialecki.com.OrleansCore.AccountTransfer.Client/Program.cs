@@ -83,6 +83,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
         private static async Task DoClientWork(IClusterClient client)
         {
             var subscriptionClient = new SubscriptionClient(ServiceBusConnectionString, "accountTransferUpdates", "orleansSubscription");
+            subscriptionClient.PrefetchCount = 1000;
 
             try
             {
@@ -105,7 +106,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
                         }
                     },
                     new MessageHandlerOptions(async args => Console.WriteLine(args.Exception + ", stack trace: " + args.Exception.StackTrace))
-                    { MaxConcurrentCalls = 10, AutoComplete = false });
+                    { MaxConcurrentCalls = 30, AutoComplete = false });
             }
             catch (Exception e)
             {

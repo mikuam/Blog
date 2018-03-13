@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,18 +15,32 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
         {
             try
             {
-                var productRating = new ProductRatingUpdateMessage { ProductId = 123, RatingSum = 23 };
-                var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(productRating))){ SessionId = "S1" };
+                //var productRating = new ProductRatingUpdateMessage { ProductId = 123, RatingSum = 23 };
+                //var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(productRating))){ SessionId = "S1" };
 
-                var transferMessage = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(
-                    new { From = 1, To = 2, Ammount = 300 })));
                 var topicClient = new TopicClient(ServiceBusConnectionString, "accountTransferUpdates");
-                await topicClient.SendAsync(message);
+                for(int i = 0; i < 50; i++)
+                {
+                    await topicClient.SendAsync(GetMessages());
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+        }
+
+        private List<Message> GetMessages()
+        {
+            var rand = new Random();
+            var messages = new List<Message>();
+            for (int i = 0; i < 100; i++)
+            {
+                messages.Add(new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(
+                    new { From = rand.Next(1, 1000), To = rand.Next(1, 1000), Amount = rand.Next(20, 800) }))));
+            }
+
+            return messages;
         }
     }
 }
