@@ -1,45 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.ServiceBus;
+using Microsoft.ServiceBus.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using Microsoft.ServiceBus;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ServiceBusExamples
 {
-    using Microsoft.ServiceBus.Messaging;
-    using System;
-    using System.Configuration;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Threading.Tasks;
-
-    class Program
+    public class SimpleExamples
     {
-        static void Main(string[] args)
-        {
-            // Task.Run(() => SendTestMessagesAsync(1000)).GetAwaiter().GetResult();
-
-            // Task.Run(SendMessagesInBatch).GetAwaiter().GetResult();
-            try
-            {
-                SimpleAndSmartSendBatch();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            // GetMessagesBySubscribing();
-
-            Console.ReadKey();
-        }
-
         private static void SimpleSendBatch()
         {
             var client = GetQueueClient();
             client.SendBatch(GetALotOfMessages());
         }
 
-        private static void SimpleAndSmartSendBatch()
+        public static void SimpleAndSmartSendBatch()
         {
             var client = GetQueueClient();
             var messages = GetALotOfMessages();
