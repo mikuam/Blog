@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="2.0.0-rc0" />
-    <PackageReference Include="Microsoft.Orleans.OrleansCodeGenerator.Build" Version="2.0.0-rc0" />
-    <PackageReference Include="Microsoft.Orleans.Transactions" Version="2.0.0-rc0" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="2.0.0-rc2" />
+    <PackageReference Include="Microsoft.Orleans.OrleansCodeGenerator.Build" Version="2.0.0-rc2" />
+    <PackageReference Include="Microsoft.Orleans.Transactions" Version="2.0.0-rc2" />
   </ItemGroup>
 
   <ItemGroup>

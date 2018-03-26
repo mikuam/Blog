@@ -29,7 +29,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
             {
                 using (var client = await StartClientWithRetries())
                 {
-                    await DoClientWork(client);
+                    DoClientWork(client);
                     Console.ReadKey();
                 }
 
@@ -55,9 +55,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
                     var gateway = new IPEndPoint(siloAddress, gatewayPort);
 
                     client = new ClientBuilder()
-                        .ConfigureCluster(options => options.ClusterId = "accounting")
-                        .UseStaticClustering(options => options.Gateways.Add(gateway.ToGatewayUri()))
-                        .ConfigureApplicationParts(parts => parts.AddFromAppDomain().AddFromApplicationBaseDirectory())
+                        .UseLocalhostClustering()
                         .ConfigureLogging(logging => logging.AddConsole())
                         .Build();
 
@@ -80,7 +78,7 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
             return client;
         }
 
-        private static async Task DoClientWork(IClusterClient client)
+        private static void DoClientWork(IClusterClient client)
         {
             var subscriptionClient = new SubscriptionClient(ServiceBusConnectionString, "accountTransferUpdates", "orleansSubscription");
             subscriptionClient.PrefetchCount = 1000;
@@ -90,23 +88,16 @@ namespace MichalBialecki.com.OrleansCore.AccountTransfer.Client
                 subscriptionClient.RegisterMessageHandler(
                     async (message, token) =>
                     {
-                        try
-                        {
-                            var messageJson = Encoding.UTF8.GetString(message.Body);
-                            var updateMessage = JsonConvert.DeserializeObject<AccountTransferMessage>(messageJson);
+                        var messageJson = Encoding.UTF8.GetString(message.Body);
+                        var updateMessage = JsonConvert.DeserializeObject<AccountTransferMessage>(messageJson);
                             
-                            await client.GetGrain<IAccountGrain>(updateMessage.From).Withdraw(updateMessage.Amount);
-                            await client.GetGrain<IAccountGrain>(updateMessage.To).Deposit(updateMessage.Amount);
+                        //await client.GetGrain<IAccountGrain>(updateMessage.From).Withdraw(updateMessage.Amount);
+                        //await client.GetGrain<IAccountGrain>(updateMessage.To).Deposit(updateMessage.Amount);
 
-                            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
+                        await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
                     },
                     new MessageHandlerOptions(async args => Console.WriteLine(args.Exception + ", stack trace: " + args.Exception.StackTrace))
-                    { MaxConcurrentCalls = 30, AutoComplete = false });
+                    { MaxConcurrentCalls = 1, AutoComplete = false });
             }
             catch (Exception e)
             {

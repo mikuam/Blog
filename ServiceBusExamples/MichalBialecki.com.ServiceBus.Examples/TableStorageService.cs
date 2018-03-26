@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.CosmosDB.Table;
 using Microsoft.Azure.Storage;
 using System;
-using System.Threading.Tasks;
 
 namespace ServiceBusExamples
 {
@@ -23,7 +22,6 @@ namespace ServiceBusExamples
             var storageAccount = CloudStorageAccount.Parse(CosmosBDConnectionString);
             var tableClient = storageAccount.CreateCloudTableClient();
             accountsTable = tableClient.GetTableReference("accounts");
-
         }
         
         public double UpdateAccount(int accountNumber, double amount)
