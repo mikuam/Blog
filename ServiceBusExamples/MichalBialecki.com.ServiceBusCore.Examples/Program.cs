@@ -12,6 +12,8 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
 
             //new MessageProcessor().Process();
 
+
+            Console.WriteLine("Done");
             Console.ReadKey();
         }
     }

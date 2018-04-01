@@ -19,9 +19,10 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
                 //var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(productRating))){ SessionId = "S1" };
 
                 var topicClient = new TopicClient(ServiceBusConnectionString, "accountTransferUpdates");
-                for(int i = 0; i < 50; i++)
+                for(int i = 0; i < 10; i++)
                 {
                     await topicClient.SendAsync(GetMessages());
+                    Console.WriteLine($"Sending message batch {i}");
                 }
             }
             catch (Exception e)
