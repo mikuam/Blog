@@ -9,10 +9,7 @@ namespace MichalBialecki.com.NetCore.Console
     {
         static void Main(string[] args)
         {
-            var userIds = GetUserIds(10);
-            var services = new UsersService();
-            Task.Run(async () => await services.GetUsersInParallelInWithBatches(userIds));
-            //Task.Run(async () => await Measure());
+            Task.Run(async () => await Measure());
 
             System.Console.ReadKey();
         }
@@ -21,7 +18,7 @@ namespace MichalBialecki.com.NetCore.Console
         {
             var services = new UsersService();
             var stopper = new Stopwatch();
-            var userIds = GetUserIds(10);
+            var userIds = GetUserIds(1000);
 
             stopper.Start();
             await services.GetUsersSynchrnously(userIds);
