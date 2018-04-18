@@ -9,27 +9,35 @@ namespace MichalBialecki.com.NetCore.Console
     {
         static void Main(string[] args)
         {
+            var userIds = GetUserIds(10);
+            var services = new UsersService();
+            Task.Run(async () => await services.GetUsersInParallelInWithBatches(userIds));
+            //Task.Run(async () => await Measure());
+
+            System.Console.ReadKey();
+        }
+
+        private static async Task Measure()
+        {
             var services = new UsersService();
             var stopper = new Stopwatch();
-            var userIds = GetUserIds(10000);
+            var userIds = GetUserIds(10);
 
             stopper.Start();
-            Task.Run(async () => await services.GetUsersSynchrnously(userIds));
+            await services.GetUsersSynchrnously(userIds);
             System.Console.WriteLine("Synchronous: " + stopper.Elapsed);
 
             stopper.Restart();
-            Task.Run(async () => await services.GetUsersInParallel(userIds));
+            await services.GetUsersInParallel(userIds);
             System.Console.WriteLine("In paralell: " + stopper.Elapsed);
 
             stopper.Restart();
-            Task.Run(async () => await services.GetUsersInParallelFixed(userIds));
+            await services.GetUsersInParallelFixed(userIds);
             System.Console.WriteLine("In paralell fixed: " + stopper.Elapsed);
 
             stopper.Restart();
-            Task.Run(async () => await services.GetUsersInParallelInWithBatches(userIds));
+            await services.GetUsersInParallelInWithBatches(userIds);
             System.Console.WriteLine("In paralell with batches: " + stopper.Elapsed);
-
-            System.Console.ReadKey();
         }
 
         private static IEnumerable<int> GetUserIds(int numberOfIds)

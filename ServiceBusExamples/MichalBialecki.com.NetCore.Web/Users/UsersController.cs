@@ -19,12 +19,20 @@ namespace MichalBialecki.com.NetCore.Web.Users
         [HttpGet("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            var user = await _usersRepository.GetUserById(id);
-            return Json(user);
+            try
+            {
+                var user = await _usersRepository.GetUserById(id);
+                return Json(user);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            
         }
 
-        [HttpPost]
-        public async Task<JsonResult> Get(IEnumerable<int> ids)
+        [HttpPost("GetMany")]
+        public async Task<JsonResult> GetMany([FromBody]IEnumerable<int> ids)
         {
             var users = await _usersRepository.GetUsersById(ids);
             return Json(users);
