@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MichalBialecki.com.NetCore.Web.Users;
+﻿using MichalBialecki.com.NetCore.Web.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MichalBialecki.com.NetCore.Web
@@ -25,7 +20,9 @@ namespace MichalBialecki.com.NetCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddXmlSerializerFormatters();
 
             services.AddTransient<IUsersRepository, UsersRepository>();
 
@@ -51,6 +48,7 @@ namespace MichalBialecki.com.NetCore.Web
             }
 
             app.UseMvc();
+            
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
