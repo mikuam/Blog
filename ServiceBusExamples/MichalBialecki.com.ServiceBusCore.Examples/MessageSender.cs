@@ -19,7 +19,7 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
                 //var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(productRating))){ SessionId = "S1" };
 
                 var topicClient = new TopicClient(ServiceBusConnectionString, "accountTransferUpdates");
-                for(int i = 0; i < 10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     await topicClient.SendAsync(GetMessages());
                     Console.WriteLine($"Sending message batch {i}");
@@ -42,6 +42,15 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
             }
 
             return messages;
+        }
+
+        public async Task Send1000()
+        {
+            var queueClient = new QueueClient(ServiceBusConnectionString, "go_testing");
+            for (int i = 0; i < 1000; i++)
+            {
+                await queueClient.SendAsync(new Message(Encoding.UTF8.GetBytes("Message number " + i)));
+            }
         }
     }
 }

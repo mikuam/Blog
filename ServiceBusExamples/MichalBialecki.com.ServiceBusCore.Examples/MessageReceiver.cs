@@ -33,5 +33,22 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
                 Console.WriteLine("Exception: " + e.Message);
             }
         }
+
+        public void ReceiveAll()
+        {
+            var queueClient = new QueueClient(ServiceBusConnectionString, "go_testing");
+
+            queueClient.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    var messageBody = Encoding.UTF8.GetString(message.Body);
+
+                    Console.WriteLine($"Received: {messageBody}, time: {DateTime.Now}");
+
+                    await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+                },
+                new MessageHandlerOptions(async args => Console.WriteLine(args.Exception))
+                { MaxConcurrentCalls = 1, AutoComplete = false });
+        }
     }
 }
