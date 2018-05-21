@@ -1,4 +1,6 @@
-﻿namespace ServiceBusExamples
+﻿using MichalBialecki.com.ServiceBus.Examples;
+
+namespace ServiceBusExamples
 {
     using System;
 
@@ -8,7 +10,8 @@
         {
             try
             {
-                new AccountTransferExample().Process();
+                (new MessageReceiverOld().ReceiveOne()).GetAwaiter().GetResult();
+                //new AccountTransferExample().Process();
 
                 //SimpleExamples.SimpleAndSmartSendBatch();
             }

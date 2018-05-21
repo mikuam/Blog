@@ -91,6 +91,7 @@
     <Compile Include="AccountTransferExample.cs" />
     <Compile Include="AccountTransferMessage.cs" />
     <Compile Include="BalanceUpdateMessage.cs" />
+    <Compile Include="MessageReceiverOld.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleExamples.cs" />
