@@ -59,9 +59,7 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
                 async (message, token) =>
                 {
                     var messageBody = Encoding.UTF8.GetString(message.Body);
-
                     Console.WriteLine($"Received: {messageBody}, time: {DateTime.Now}");
-
                     await queueClient.CompleteAsync(message.SystemProperties.LockToken);
 
                     await queueClient.CloseAsync();
