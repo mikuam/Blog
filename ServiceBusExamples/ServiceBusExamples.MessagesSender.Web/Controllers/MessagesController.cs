@@ -6,12 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 using Newtonsoft.Json;
 using ServiceBusExamples.MessagesSender.NetCore.Web.Dto;
+using ServiceBusExamples.MessagesSender.NetCore.Web.Services;
 
 namespace ServiceBusExamples.MessagesSender.NetCore.Web.Controllers
 {
     [Route("Messages")]
     public class MessagesController : Controller
     {
+        private const string ServiceBusConnectionString = "Endpoint=sb://bialecki.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=39cH/mE4siF49REMd9xtjVlUwoc0yPJNz9J8isRc9vY=";
+
+        private readonly TopicClient _topicClient;
+
+        public MessagesController()
+        {
+            _topicClient = new TopicClient(ServiceBusConnectionString, "stockupdated");
+        }
+
         [Route("Send")]
         [HttpPost]
         public async Task<IActionResult> Send([FromBody]SendMessageDto message)
@@ -26,14 +36,7 @@ namespace ServiceBusExamples.MessagesSender.NetCore.Web.Controllers
                     UpdatedAt = DateTime.UtcNow
                 };
 
-                var serviceBusClient = new ServiceBusClient();
-                serviceBusClient.Init(
-                    ConfigurationHelper.GetServiceBusConnectionString(),
-                    string.Empty,
-                    "stockupdated");
-
-                var topicClent = serviceBusClient.GetTopicClient();
-                await topicClent.SendAsync(new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(document))));
+                await _topicClient.SendAsync(new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(document))));
 
                 return StatusCode(200);
             }
@@ -97,15 +100,32 @@ namespace ServiceBusExamples.MessagesSender.NetCore.Web.Controllers
                     .Select(m => new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(m))))
                     .ToList();
 
-                var serviceBusClient = new ServiceBusClient();
-                serviceBusClient.Init(
-                    ConfigurationHelper.GetServiceBusConnectionString(),
-                    string.Empty,
-                    "productRatingUpdates");
-                var topicClent = serviceBusClient.GetTopicClient();
-                await topicClent.SendAsync(messages);
+                await _topicClient.SendAsync(messages);
 
-                return StatusCode(200);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [Route("SendWithBuffering")]
+        [HttpPost]
+        public IActionResult SendWithBuffering()
+        {
+            try
+            {
+                /*
+                var service = new SimpleBufferMessagesService();
+                await service.AddMessage("test message" + DateTime.Now);
+                */            
+    
+                var service = new TimerBufferMessagesService();
+                service.AddMessage("test message" + DateTime.Now);
+
+                return Ok();
             }
             catch (Exception e)
             {
