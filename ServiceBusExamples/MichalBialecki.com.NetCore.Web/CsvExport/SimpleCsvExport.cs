@@ -1,11 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace MichalBialecki.com.NetCore.Web.CsvExport
 {
-    public class SimpleCsvExport
+    public class SimpleCsvExport : ICsvExport
     {
+        private readonly IProductGenerator _productGenerator;
+
+        public SimpleCsvExport(IProductGenerator productGenerator)
+        {
+            _productGenerator = productGenerator;
+        }
+
+        public string ReturnData()
+        {
+            var columnNames = GetColumnNames();
+            var builder = new StringBuilder();
+
+            builder.AppendJoin(";", columnNames);
+            builder.AppendLine();
+
+            foreach (var product in _productGenerator.GenerateProducts(100))
+            {
+                var values = GetValues(product);
+                builder.AppendJoin(";", values);
+                builder.AppendLine();
+            }
+
+            return builder.ToString();
+        }
+
+        private string[] GetColumnNames()
+        {
+            return new[] {
+            "Id",
+            "Name",
+            "ReferenceNumber",
+            "ProducerName",
+            "QuantityAvailable",
+            "QuantitySoldLastMonth",
+            "Weight",
+            "Price",
+            "LastOrderDate"};
+        }
+
+        private string[] GetValues(ProductDto product)
+        {
+            return new[]
+            {
+                product.Id,
+                product.Name,
+                product.ReferenceNumber,
+                product.ProducerName,
+                product.QuantityAvailable.ToString(),
+                product.QuantitySoldLastMonth.ToString(),
+                product.Weight.ToString(),
+                product.Price.ToString(),
+                product.LastOrderDate.ToString()
+            };
+        }
     }
 }

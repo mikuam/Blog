@@ -1,4 +1,5 @@
-﻿using MichalBialecki.com.NetCore.Web.Users;
+﻿using MichalBialecki.com.NetCore.Web.CsvExport;
+using MichalBialecki.com.NetCore.Web.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -25,6 +26,8 @@ namespace MichalBialecki.com.NetCore.Web
                 .AddXmlSerializerFormatters();
 
             services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<ICsvExport, SimpleCsvExport>();
+            services.AddTransient<IProductGenerator, ProductGenerator>();
 
             services.AddSwaggerGen(c =>
             {
@@ -34,7 +37,7 @@ namespace MichalBialecki.com.NetCore.Web
                     Title = "My API",
                     Description = "My First ASP.NET Core Web API",
                     TermsOfService = "None",
-                    Contact = new Contact() { Name = "Michał Białecki", Email = "mik.bialecki@gmail.com", Url = "michalbialecki.com" }
+                    Contact = new Contact() { Name = "Michał Białecki", Email = "mik.bialecki@gmail.com", Url = "http://michalbialecki.com" }
                 });
             });
         }
