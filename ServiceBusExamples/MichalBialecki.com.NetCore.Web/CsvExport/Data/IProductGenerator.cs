@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MichalBialecki.com.NetCore.Web.CsvExport
+namespace MichalBialecki.com.NetCore.Web.CsvExport.Data
 {
     public interface IProductGenerator
     {
