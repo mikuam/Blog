@@ -10,30 +10,13 @@ namespace MichalBialecki.com.NetCore.Web.CsvExport.Data
 
         public string ExportName { get; set; }
 
-        public string ExportValue { get; set; }
-
-        public bool IsXmlAttribute { get; set; }
-
-        public bool ValueAsXmlCdata { get; set; }
-
         public string Format { get; set; }
 
         public int Order { get; set; }
 
-        public CultureInfo Culture { get; set; }
-
-        public Type CustomFormatProviderType { get; set; }
-
-        public Type ValueConverterType { get; set; }
-
         public string GetValue(object obj)
         {
             object value = PropertyInfo.GetValue(obj);
-
-            if (!string.IsNullOrWhiteSpace(ExportValue))
-            {
-                return ExportValue;
-            }
 
             if (value == null)
             {
@@ -42,7 +25,7 @@ namespace MichalBialecki.com.NetCore.Web.CsvExport.Data
 
             if (!string.IsNullOrWhiteSpace(Format) && value is IFormattable)
             {
-                return (value as IFormattable).ToString(Format, Culture);
+                return (value as IFormattable).ToString(Format, CultureInfo.CurrentCulture);
             }
 
             if (!string.IsNullOrWhiteSpace(Format))
