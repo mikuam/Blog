@@ -29,6 +29,7 @@ namespace MichalBialecki.com.NetCore.Web
             services.AddTransient<ICsvExport, SimpleCsvExport>();
             services.AddTransient<IProductGenerator, ProductGenerator>();
             services.AddTransient<IProductComparerExportService, ProductComparerExportService>();
+            services.AddTransient<IProductAnalyticsExportService, ProductAnalyticsExportService>();
 
             services.AddSwaggerGen(c =>
             {
