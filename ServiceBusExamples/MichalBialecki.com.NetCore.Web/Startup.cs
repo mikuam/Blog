@@ -1,8 +1,8 @@
 ﻿using MichalBialecki.com.NetCore.Web.CsvExport;
+using MichalBialecki.com.NetCore.Web.CsvExport.Data;
 using MichalBialecki.com.NetCore.Web.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -28,6 +28,7 @@ namespace MichalBialecki.com.NetCore.Web
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<ICsvExport, SimpleCsvExport>();
             services.AddTransient<IProductGenerator, ProductGenerator>();
+            services.AddTransient<IProductComparerExportService, ProductComparerExportService>();
 
             services.AddSwaggerGen(c =>
             {

@@ -10,11 +10,11 @@ using MichalBialecki.com.NetCore.Web.CsvExport.Data;
 
 namespace MichalBialecki.com.NetCore.Web.CsvExport
 {
-    public class GenericExportService
+    public abstract class GenericExportService
     {
         private const string CsvDelimeter = ";";
 
-        public string Export<TAttribute>(IEnumerable<ProductDto> products)
+        protected string Export<TAttribute>(IEnumerable<ProductDto> products)
             where TAttribute : ExportAttribute
         {
             using (var exportStream = (MemoryStream)GetStream<TAttribute>(products))
@@ -30,12 +30,15 @@ namespace MichalBialecki.com.NetCore.Web.CsvExport
             var stream = new MemoryStream();
             var streamWriter = new StreamWriter(stream, new UTF8Encoding(false));
             
-            var columns = GetColumnNames<TAttribute>();
-            streamWriter.WriteLine(string.Join(CsvDelimeter, columns));
+            var columns = GetColumns<TAttribute>().OrderBy(o => o.ExportAttribute.Order);
+            var columnNames = columns.Select(c => c.ExportAttribute.ExportName != null
+                ? c.ExportAttribute.ExportName
+                : c.PropertyInfo.Name);
+            streamWriter.WriteLine(string.Join(CsvDelimeter, columnNames));
 
             foreach (var item in objectList)
             {
-                var values = GetProductValues<TAttribute>(item);
+                var values = GetProductValues<TAttribute>(item, columns);
                 streamWriter.WriteLine(string.Join(CsvDelimeter, values));
             }
 
@@ -44,28 +47,25 @@ namespace MichalBialecki.com.NetCore.Web.CsvExport
             return stream;
         }
 
-        private IEnumerable<string> GetColumnNames<TAttribute>()
+        private IEnumerable<ExportProperty> GetColumns<TAttribute>()
             where TAttribute : ExportAttribute
         {
             return typeof(ProductDto).GetProperties().Select(
                 property => {
                     var exportAttribute = ((TAttribute)property.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault());
-                    return exportAttribute?.ExportName;
+                    return exportAttribute == null
+                        ? null
+                        : new ExportProperty { PropertyInfo = property, ExportAttribute = exportAttribute };
                 }).Where(p => p != null);
         }
 
-        private List<string> GetProductValues<TAttribute>(ProductDto product)
+        private List<string> GetProductValues<TAttribute>(ProductDto product, IEnumerable<ExportProperty> columns)
             where TAttribute : ExportAttribute
         {
-            var properties = typeof(ProductDto).GetProperties();
             var propertyValues = new List<string>();
-            foreach (var propertyInfo in properties)
+            foreach (var column in columns)
             {
-                var attribute = (TAttribute)propertyInfo.GetCustomAttributes(typeof(TAttribute), false).FirstOrDefault();
-                if (attribute != null)
-                {
-                    propertyValues.Add(GetAttributeValue(product, propertyInfo, attribute));
-                }
+                propertyValues.Add(GetAttributeValue(product, column.PropertyInfo, column.ExportAttribute));
             }
 
             return propertyValues;

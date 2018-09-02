@@ -1,18 +1,13 @@
-﻿using System;
+﻿using MichalBialecki.com.NetCore.Web.CsvExport.Data;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MichalBialecki.com.NetCore.Web.CsvExport
 {
     public class SimpleCsvExport : ICsvExport
     {
-        private readonly IProductGenerator _productGenerator;
-
-        public SimpleCsvExport(IProductGenerator productGenerator)
-        {
-            _productGenerator = productGenerator;
-        }
-
-        public string ReturnData()
+        public string ReturnData(IList<ProductDto> products)
         {
             var columnNames = GetColumnNames();
             var builder = new StringBuilder();
@@ -20,7 +15,7 @@ namespace MichalBialecki.com.NetCore.Web.CsvExport
             builder.AppendJoin(";", columnNames);
             builder.AppendLine();
 
-            foreach (var product in _productGenerator.GenerateProducts(100))
+            foreach (var product in products)
             {
                 var values = GetValues(product);
                 builder.AppendJoin(";", values);
