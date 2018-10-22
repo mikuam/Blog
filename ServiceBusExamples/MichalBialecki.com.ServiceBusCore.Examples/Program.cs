@@ -17,7 +17,10 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
 
             var manager = new ServiceBusManager();
 
-            manager.GetOrCreateQueue(configuration["ServiceBusConnectionString"], "createTest").GetAwaiter().GetResult();
+            manager.GetOrCreateTopicSubscription(
+                configuration["ServiceBusConnectionString"],
+                "balanceUpdates",
+                "saveSubscription").GetAwaiter().GetResult();
 
             //(new MessageSender().Send()).GetAwaiter().GetResult();
 
