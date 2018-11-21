@@ -1,4 +1,4 @@
-﻿namespace ServiceBusExamples
+﻿namespace MichalBialecki.com.ServiceBusCore.Examples.AccountTransfer
 {
     public class AccountTransferMessage
     {
