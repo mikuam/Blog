@@ -22,7 +22,9 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
             s.Start();
 
             var service = new AccountTransferService(configuration);
-            service.Run();
+
+            Console.WriteLine("Starting...");
+            //service.Run();
             /*
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -37,7 +39,7 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
                 "balanceUpdates",
                 "saveSubscription").GetAwaiter().GetResult();
                 */
-            //(new MessageSender().Send()).GetAwaiter().GetResult();
+            (new MessageSender().Send()).GetAwaiter().GetResult();
 
             //new MessageReceiver().Receive();
 
@@ -49,9 +51,9 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
 
             s.Stop();
 
-            Console.WriteLine("Sent in: " + s.Elapsed);
+            //Console.WriteLine("Sent in: " + s.Elapsed);
 
-            Console.WriteLine("Done");
+            //Console.WriteLine("Done");
             Console.ReadKey();
         }
     }

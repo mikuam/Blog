@@ -42,7 +42,11 @@ namespace MichalBialecki.com.ServiceBusCore.Examples.AccountTransfer
                         Console.WriteLine($"Processed a message from {updateMessage.From} to {updateMessage.To}");
                     },
                     new MessageHandlerOptions(OnException)
-                        { MaxConcurrentCalls = 1, AutoComplete = true });
+                    {
+                        MaxAutoRenewDuration = TimeSpan.FromMinutes(60),
+                        MaxConcurrentCalls = 1,
+                        AutoComplete = true
+                    });
             }
             catch (Exception e)
             {

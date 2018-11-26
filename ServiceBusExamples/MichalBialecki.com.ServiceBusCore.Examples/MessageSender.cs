@@ -35,7 +35,7 @@ namespace MichalBialecki.com.ServiceBusCore.Examples
         {
             var rand = new Random();
             var messages = new List<Message>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 messages.Add(new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(
                     new { From = rand.Next(1, 1000), To = rand.Next(1, 1000), Amount = rand.Next(20, 800) }))));
