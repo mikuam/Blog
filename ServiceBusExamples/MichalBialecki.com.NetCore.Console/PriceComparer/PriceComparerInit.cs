@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
 using Newtonsoft.Json;
@@ -14,31 +15,30 @@ namespace MichalBialecki.com.NetCore.Console.PriceComparer
         private HttpClient httpClient;
         private Faker faker;
 
-        private const string SFUrl = "http://fab-cl-fv80j72.fabres.local:8505";
+        //private const string ServiceUrl = "http://fab-cl-fv80j72.fabres.local:8505";
+        private const string ServiceUrl = "http://localhost:60102";
 
         public void Init(int numberOfSellers, int numberOfProducts)
         {
             httpClient = new HttpClient();
             faker = new Faker();
 
-            System.Console.WriteLine("Generating sellers");
+            System.Console.WriteLine($"Generating sellers at: {DateTime.Now}");
             var sellers = GenerateSellers(numberOfSellers, numberOfProducts);
             System.Console.WriteLine("Generating products");
             var products = GenerateProducts(numberOfProducts, sellers);
 
             System.Console.WriteLine("Init sellers started");
 
-            var sellerTasks = sellers.Select(s => httpClient.PostAsync($"{SFUrl}/api/seller", GetJson(s)));
-            Task.WaitAll(sellerTasks.ToArray());
+            SendBatch($"{ServiceUrl}/api/seller", sellers);
 
             System.Console.WriteLine($"{sellers.Count} sellers initialized");
 
             System.Console.WriteLine("Init products started");
 
-            var productTasks = products.Select(p => httpClient.PostAsync($"{SFUrl}/api/product", GetJson(p)));
-            Task.WaitAll(productTasks.ToArray());
+            SendBatch($"{ServiceUrl}/api/product", products);
 
-            System.Console.WriteLine($"{products.Count} products initialized");
+            System.Console.WriteLine($"{products.Count} products initialized at {DateTime.Now}");
 
             System.Console.WriteLine("Done");
         }
@@ -114,6 +114,22 @@ namespace MichalBialecki.com.NetCore.Console.PriceComparer
         private StringContent GetJson(object o)
         {
             return new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
+        }
+
+        private void SendBatch<T>(string url, List<T> objects)
+        {
+            var batchSize = 100;
+            var sendProducts = 0;
+            while (sendProducts < objects.Count)
+            {
+                var productsToSend = objects.Skip(sendProducts).Take(batchSize);
+
+                var productTasks = productsToSend.Select(o => httpClient.PostAsync(url, GetJson(o)));
+                Task.WaitAll(productTasks.ToArray());
+
+                sendProducts += batchSize;
+                System.Console.WriteLine($"{sendProducts}/{objects.Count} sent");
+            }
         }
     }
 }
