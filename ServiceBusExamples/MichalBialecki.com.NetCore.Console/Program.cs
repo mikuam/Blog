@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using MichalBialecki.com.NetCore.Console.PriceComparer;
 
 namespace MichalBialecki.com.NetCore.Console
 {
@@ -9,7 +10,10 @@ namespace MichalBialecki.com.NetCore.Console
     {
         static void Main(string[] args)
         {
-            Task.Run(async () => await Measure());
+            //Task.Run(async () => await Measure());
+
+            var priceComparer = new PriceComparerInit();
+            priceComparer.Init(1000, 10000);
 
             System.Console.ReadKey();
         }
