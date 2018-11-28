@@ -59,7 +59,7 @@ namespace MichalBialecki.com.PriceComparer.Web.Controllers
                 seller.MarksCount += 1;
                 seller.MarksSum += mark;
 
-                await _sellerRepository.Save(seller);
+                await _sellerRepository.Update(seller);
             }
             catch (Exception e)
             {
