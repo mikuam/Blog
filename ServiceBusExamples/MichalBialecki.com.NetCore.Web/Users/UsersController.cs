@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -38,13 +39,31 @@ namespace MichalBialecki.com.NetCore.Web.Users
             return Json(users);
         }
         
-        [HttpPost]
-        public async Task GenerateUsers(int? number = 100)
+        [HttpPost("GenerateUsers")]
+        public async Task GenerateUsers(int? number = 1000)
         {
             for (int i = 0; i < number; i++)
             {
                 await _usersRepository.AddUser(RandomString(10));
             }
+        }
+
+        [HttpGet("GetCountByCountryCode")]
+        public async Task<JsonResult> GetTop100ByCountryCode()
+        {
+            var watch = new Stopwatch();
+            watch.Start();
+
+            var count1 = await _usersRepository.GetCountByCountryCode("PL");
+            watch.Stop();
+            var elapsedCount1 = watch.Elapsed;
+            watch.Reset();
+            watch.Start();
+
+            var count2 = await _usersRepository.GetCountByCountryCodeAsAnsi("PL");
+            watch.Stop();
+
+            return Json(new { TimeElapsed = elapsedCount1, TimeElaspedWitAnsi = watch.Elapsed });
         }
 
         private static Random random = new Random();

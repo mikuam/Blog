@@ -8,6 +8,8 @@ namespace MichalBialecki.com.NetCore.Web.Users
 
         public string Name { get; set; }
 
+        public string CountryCode { get; set; }
+
         public DateTime LastModified { get; set; }
     }
 }
