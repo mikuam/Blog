@@ -1,14 +1,16 @@
-﻿using System;
-using Dapper;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-
 namespace MichalBialecki.com.NetCore.Web.Users
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Dapper;
+
     public class UsersRepository : IUsersRepository
     {
-        private const string ConnectionString = "Data Source=MIKLAPTOP\\SQLEXPRESS;Initial Catalog=Blog;Integrated Security=True";
+        private const string ConnectionString = "Data Source=localhost;Initial Catalog=Blog;Integrated Security=True";
         private readonly Random random = new Random();
         
         public async Task<UserDto> GetUserById(int userId)
@@ -61,6 +63,47 @@ namespace MichalBialecki.com.NetCore.Web.Users
                     new { CountryCode = new DbString() { Value = countryCode, IsAnsi = true, Length = 2 } })
                     .ConfigureAwait(false);
             }
+        }
+
+        public async Task InsertMany(IEnumerable<string> userNames)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                await connection.ExecuteAsync(
+                    "INSERT INTO [Users] (Name, LastUpdatedAt) VALUES (@Name, getdate())",
+                    userNames.Select(u => new { Name = u })).ConfigureAwait(false);
+            }
+        }
+
+        public async Task InsertInBulk(IList<string> userNames)
+        {
+            var sqls = GetSqlsInBatches(userNames);
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                foreach (var sql in sqls)
+                {
+                    await connection.ExecuteAsync(sql);
+                }
+            }
+        }
+
+        private IList<string> GetSqlsInBatches(IList<string> userNames)
+        {
+            var insertSql = "INSERT INTO [Users] (Name, LastUpdatedAt) VALUES ";
+            var valuesSql = "('{0}', getdate())";
+            var batchSize = 1000;
+
+            var sqlsToExecute = new List<string>();
+            var numberOfBatches = (int)Math.Ceiling((double)userNames.Count / batchSize);
+
+            for (int i = 0; i < numberOfBatches; i++)
+            {
+                var userToInsert = userNames.Skip(i * batchSize).Take(batchSize);
+                var valuesToInsert = userToInsert.Select(u => string.Format(valuesSql, u));
+                sqlsToExecute.Add(insertSql + string.Join(',', valuesToInsert));
+            }
+
+            return sqlsToExecute;
         }
     }
 }

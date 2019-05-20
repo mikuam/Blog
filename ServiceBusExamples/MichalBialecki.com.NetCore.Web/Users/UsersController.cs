@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
-namespace MichalBialecki.com.NetCore.Web.Users
+﻿namespace MichalBialecki.com.NetCore.Web.Users
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
+        private static Random random = new Random();
+
         private readonly IUsersRepository _usersRepository;
 
         public UsersController(IUsersRepository usersRepository)
@@ -29,7 +32,6 @@ namespace MichalBialecki.com.NetCore.Web.Users
             {
                 throw;
             }
-            
         }
 
         [HttpPost("GetMany")]
@@ -38,14 +40,50 @@ namespace MichalBialecki.com.NetCore.Web.Users
             var users = await _usersRepository.GetUsersById(ids);
             return Json(users);
         }
-        
-        [HttpPost("GenerateUsers")]
-        public async Task GenerateUsers(int? number = 1000)
+
+        [HttpPost("InsertMany")]
+        public async Task<JsonResult> InsertMany(int? number = 100)
         {
+            var userNames = new List<string>();
             for (int i = 0; i < number; i++)
             {
-                await _usersRepository.AddUser(RandomString(10));
+                userNames.Add(RandomString(10));
             }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            await _usersRepository.InsertMany(userNames);
+
+            stopwatch.Stop();
+            return Json(
+                new {
+                    users = number,
+                    time = stopwatch.Elapsed
+                    });
+        }
+
+        [HttpPost("InsertInBulk")]
+        public async Task<JsonResult> InsertInBulk(int? number = 100)
+        {
+            var userNames = new List<string>();
+            for (int i = 0; i < number; i++)
+            {
+                userNames.Add(RandomString(10));
+            }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            await _usersRepository.InsertInBulk(userNames);
+
+            stopwatch.Stop();
+            return Json(
+                new
+                    {
+                        users = number,
+                        time = stopwatch.Elapsed
+                    });
         }
 
         [HttpGet("GetCountByCountryCode")]
@@ -66,8 +104,7 @@ namespace MichalBialecki.com.NetCore.Web.Users
             return Json(new { TimeElapsed = elapsedCount1, TimeElaspedWitAnsi = watch.Elapsed });
         }
 
-        private static Random random = new Random();
-        public static string RandomString(int length)
+        private static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
