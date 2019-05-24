@@ -63,6 +63,29 @@
                     });
         }
 
+        [HttpPost("SafeInsertMany")]
+        public async Task<JsonResult> SafeInsertMany(int? number = 100)
+        {
+            var userNames = new List<string>();
+            for (int i = 0; i < number; i++)
+            {
+                userNames.Add(RandomString(10));
+            }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            await _usersRepository.SafeInsertMany(userNames);
+
+            stopwatch.Stop();
+            return Json(
+                new
+                    {
+                        users = number,
+                        time = stopwatch.Elapsed
+                    });
+        }
+
         [HttpPost("InsertInBulk")]
         public async Task<JsonResult> InsertInBulk(int? number = 100)
         {

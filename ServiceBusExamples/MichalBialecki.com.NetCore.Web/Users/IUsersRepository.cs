@@ -17,6 +17,8 @@
 
         Task InsertMany(IEnumerable<string> userNames);
 
+        Task SafeInsertMany(IEnumerable<string> userNames);
+
         Task InsertInBulk(IList<string> userNames);
 
     }

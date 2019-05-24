@@ -2,6 +2,7 @@ namespace MichalBialecki.com.NetCore.Web.Users
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
     using System.Threading.Tasks;
@@ -72,6 +73,23 @@ namespace MichalBialecki.com.NetCore.Web.Users
                 await connection.ExecuteAsync(
                     "INSERT INTO [Users] (Name, LastUpdatedAt) VALUES (@Name, getdate())",
                     userNames.Select(u => new { Name = u })).ConfigureAwait(false);
+            }
+        }
+
+        public async Task SafeInsertMany(IEnumerable<string> userNames)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var parameters = userNames.Select(u =>
+                    {
+                        var tempParams = new DynamicParameters();
+                        tempParams.Add("@Name", u, DbType.String, ParameterDirection.Input);
+                        return tempParams;
+                    });
+
+                await connection.ExecuteAsync(
+                    "INSERT INTO [Users] (Name, LastUpdatedAt) VALUES (@Name, getdate())",
+                    parameters).ConfigureAwait(false);
             }
         }
 
