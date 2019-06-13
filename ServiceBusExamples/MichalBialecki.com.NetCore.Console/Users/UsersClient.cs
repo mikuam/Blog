@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace MichalBialecki.com.NetCore.Console.Users
 {
+    using System;
+
     public class UsersClient
     {
         private HttpClient client;
@@ -17,10 +19,7 @@ namespace MichalBialecki.com.NetCore.Console.Users
 
         public async Task<UserDto> GetUser(int id)
         {
-            //var response = await client.GetAsync("localhost:49532/api/users/" + id).ConfigureAwait(false);
-            var response = await client.GetAsync(
-                "http://michalbialeckicomnetcoreweb20180417060938.azurewebsites.net/api/users/" + id)
-                .ConfigureAwait(false);
+            var response = await client.GetAsync("localhost:49532/api/users/" + id).ConfigureAwait(false);
             var user = JsonConvert.DeserializeObject<UserDto>(await response.Content.ReadAsStringAsync());
 
             return user;
@@ -38,6 +37,24 @@ namespace MichalBialecki.com.NetCore.Console.Users
             var users = JsonConvert.DeserializeObject<IEnumerable<UserDto>>(await response.Content.ReadAsStringAsync());
 
             return users;
+        }
+
+        public async Task InsertUser()
+        {
+            try
+            {
+                // async stuff here
+
+                var response = await client.PostAsync("http://localhost:49532/api/users/InsertMany", null).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                // more async cally 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
