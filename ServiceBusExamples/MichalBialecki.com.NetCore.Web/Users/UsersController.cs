@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/[controller]")]
@@ -15,9 +16,12 @@
 
         private readonly IUsersRepository _usersRepository;
 
-        public UsersController(IUsersRepository usersRepository)
+        private readonly IUserService _userService;
+
+        public UsersController(IUsersRepository usersRepository, IUserService userService)
         {
             _usersRepository = usersRepository;
+            _userService = userService;
         }
         
         [HttpGet("{id}")]
@@ -126,6 +130,15 @@
 
             return Json(new { TimeElapsed = elapsedCount1, TimeElaspedWitAnsi = watch.Elapsed });
         }
+
+
+        [HttpPost("ExportUsers")]
+        public async Task<IActionResult> ExportUsers()
+        {
+            var result = await _userService.ExportUsersToExternalSystem();
+            return result ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
 
         private static string RandomString(int length)
         {
