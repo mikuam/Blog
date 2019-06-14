@@ -133,10 +133,19 @@
 
 
         [HttpPost("ExportUsers")]
-        public async Task<IActionResult> ExportUsers()
+        public IActionResult ExportUsers()
         {
-            var result = await _userService.ExportUsersToExternalSystem();
-            return result ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
+            Task.Run(
+                async () =>
+                    {
+                        var result = await _userService.ExportUsersToExternalSystem();
+                        if (!result)
+                        {
+                            // log error
+                        }
+                    });
+            
+            return Ok();
         }
 
 
