@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -135,16 +136,19 @@
         [HttpPost("ExportUsers")]
         public IActionResult ExportUsers()
         {
-            Task.Run(
-                async () =>
-                    {
-                        var result = await _userService.ExportUsersToExternalSystem();
-                        if (!result)
-                        {
-                            // log error
-                        }
-                    });
-            
+            var thread = new Thread(async () =>
+            {
+                var result = await _userService.ExportUsersToExternalSystem();
+                if (!result)
+                {
+                    // log error
+                }
+            })
+            {
+                IsBackground = true
+            };
+            thread.Start();
+
             return Ok();
         }
 
