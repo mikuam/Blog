@@ -4,8 +4,10 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/[controller]")]
@@ -15,9 +17,12 @@
 
         private readonly IUsersRepository _usersRepository;
 
-        public UsersController(IUsersRepository usersRepository)
+        private readonly IUserService _userService;
+
+        public UsersController(IUsersRepository usersRepository, IUserService userService)
         {
             _usersRepository = usersRepository;
+            _userService = userService;
         }
         
         [HttpGet("{id}")]
@@ -126,6 +131,27 @@
 
             return Json(new { TimeElapsed = elapsedCount1, TimeElaspedWitAnsi = watch.Elapsed });
         }
+
+
+        [HttpPost("ExportUsers")]
+        public IActionResult ExportUsers()
+        {
+            var thread = new Thread(async () =>
+            {
+                var result = await _userService.ExportUsersToExternalSystem();
+                if (!result)
+                {
+                    // log error
+                }
+            })
+            {
+                IsBackground = true
+            };
+            thread.Start();
+
+            return Ok();
+        }
+
 
         private static string RandomString(int length)
         {

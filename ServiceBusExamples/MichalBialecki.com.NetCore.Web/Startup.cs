@@ -26,6 +26,7 @@ namespace MichalBialecki.com.NetCore.Web
                 .AddXmlSerializerFormatters();
 
             services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICsvExport, SimpleCsvExport>();
             services.AddTransient<IProductGenerator, ProductGenerator>();
             services.AddTransient<IProductComparerExportService, ProductComparerExportService>();
