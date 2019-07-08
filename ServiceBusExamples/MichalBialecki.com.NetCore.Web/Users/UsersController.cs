@@ -7,8 +7,9 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Caching.Memory;
 
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -17,26 +18,35 @@
 
         private readonly IUsersRepository _usersRepository;
 
+        private readonly IDistributedCache _distributedCache;
+
         private readonly IUserService _userService;
 
-        public UsersController(IUsersRepository usersRepository, IUserService userService)
+        public UsersController(IUsersRepository usersRepository, IUserService userService, IDistributedCache distributedCache)
         {
             _usersRepository = usersRepository;
             _userService = userService;
+            _distributedCache = distributedCache;
         }
         
         [HttpGet("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            try
+            var cacheKey = $"User_{id}";
+            UserDto user;
+            var userBytes = await _distributedCache.GetAsync(cacheKey);
+            if (userBytes == null)
             {
-                var user = await _usersRepository.GetUserById(id);
-                return Json(user);
+                user = await _usersRepository.GetUserById(id);
+                userBytes = CacheHelper.Serialize(user);
+                await _distributedCache.SetAsync(
+                    cacheKey,
+                    userBytes,
+                    new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(5) });
             }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            user = CacheHelper.Deserialize<UserDto>(userBytes);
+            return Json(user);
         }
 
         [HttpPost("GetMany")]
@@ -132,7 +142,6 @@
             return Json(new { TimeElapsed = elapsedCount1, TimeElaspedWitAnsi = watch.Elapsed });
         }
 
-
         [HttpPost("ExportUsers")]
         public IActionResult ExportUsers()
         {
@@ -151,7 +160,6 @@
 
             return Ok();
         }
-
 
         private static string RandomString(int length)
         {

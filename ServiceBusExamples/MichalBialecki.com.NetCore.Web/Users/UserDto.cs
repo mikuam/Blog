@@ -2,6 +2,7 @@
 
 namespace MichalBialecki.com.NetCore.Web.Users
 {
+    [Serializable]
     public class UserDto
     {
         public int Id { get; set; }

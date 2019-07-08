@@ -22,6 +22,7 @@ namespace MichalBialecki.com.NetCore.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddDistributedMemoryCache()
                 .AddMvc()
                 .AddXmlSerializerFormatters();
 
