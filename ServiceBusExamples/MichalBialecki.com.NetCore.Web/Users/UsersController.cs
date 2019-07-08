@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
 
     [Route("api/[controller]")]
@@ -17,27 +18,34 @@
 
         private readonly IUsersRepository _usersRepository;
 
-        private readonly IMemoryCache _memoryCache;
+        private readonly IDistributedCache _distributedCache;
 
         private readonly IUserService _userService;
 
-        public UsersController(IUsersRepository usersRepository, IUserService userService, IMemoryCache memoryCache)
+        public UsersController(IUsersRepository usersRepository, IUserService userService, IDistributedCache distributedCache)
         {
             _usersRepository = usersRepository;
             _userService = userService;
-            _memoryCache = memoryCache;
+            _distributedCache = distributedCache;
         }
         
         [HttpGet("{id}")]
         public async Task<JsonResult> Get(int id)
         {
             var cacheKey = $"User_{id}";
-            if(!_memoryCache.TryGetValue(cacheKey, out UserDto user))
+            UserDto user;
+            var userBytes = await _distributedCache.GetAsync(cacheKey);
+            if (userBytes == null)
             {
                 user = await _usersRepository.GetUserById(id);
-                _memoryCache.Set(cacheKey, user, TimeSpan.FromMinutes(5));
+                userBytes = CacheHelper.Serialize(user);
+                await _distributedCache.SetAsync(
+                    cacheKey,
+                    userBytes,
+                    new DistributedCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(5) });
             }
 
+            user = CacheHelper.Deserialize<UserDto>(userBytes);
             return Json(user);
         }
 
@@ -134,7 +142,6 @@
             return Json(new { TimeElapsed = elapsedCount1, TimeElaspedWitAnsi = watch.Elapsed });
         }
 
-
         [HttpPost("ExportUsers")]
         public IActionResult ExportUsers()
         {
@@ -153,7 +160,6 @@
 
             return Ok();
         }
-
 
         private static string RandomString(int length)
         {
