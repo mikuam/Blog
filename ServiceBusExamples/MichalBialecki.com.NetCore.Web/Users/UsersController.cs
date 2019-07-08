@@ -7,8 +7,8 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -17,26 +17,28 @@
 
         private readonly IUsersRepository _usersRepository;
 
+        private readonly IMemoryCache _memoryCache;
+
         private readonly IUserService _userService;
 
-        public UsersController(IUsersRepository usersRepository, IUserService userService)
+        public UsersController(IUsersRepository usersRepository, IUserService userService, IMemoryCache memoryCache)
         {
             _usersRepository = usersRepository;
             _userService = userService;
+            _memoryCache = memoryCache;
         }
         
         [HttpGet("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            try
+            var cacheKey = $"User_{id}";
+            if(!_memoryCache.TryGetValue(cacheKey, out UserDto user))
             {
-                var user = await _usersRepository.GetUserById(id);
-                return Json(user);
+                user = await _usersRepository.GetUserById(id);
+                _memoryCache.Set(cacheKey, user, TimeSpan.FromMinutes(5));
             }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return Json(user);
         }
 
         [HttpPost("GetMany")]
